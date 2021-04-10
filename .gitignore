@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyCharm
+/.idea
+
+# AGD Data
+/ArknightsGameData
+
+# non-use
+/ArkGameData/itemUnprocess
+/ArkGameData/ItemProcess.py
+/ArkGameData/JsonSort.py
+/ArkGameData/renamer
+/ArkGameData/renamer.py
+ArkItemFrameBuilder/
+
+# already-on-git
+ArknightsStoryReader/
+ArkPlanner/ArkPlannerWeb/
+
+# dumped data
+ArkProxyDump/
+dll/
+
+# My StageDropInfo
+Drop/*
+!Drop/.cfg
+
+# may cause issue
+font/
+logs/*
+!logs/.gitkeep
+mitm_proxy/
+Test/
+imgReco/img/ignore/*
+
+# patch
+ArkMitmRunner.py
+utils/BattleCrypto.py
+utils/LoginCrypto.py
+
+# simple file
+yys_define.py
+test_user_sync_data.json
+Tester.py
+syncDataDump.json
+testzip.zip
+ItemProcess.json
+np.xlsx
+AOP_Title.txt
+ArkAutoUI.ui
+ArkAutoUI_pyuic.py
