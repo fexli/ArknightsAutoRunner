@@ -229,6 +229,9 @@ Out[24]: True
 安装库
 > pip install -r requirements.txt
 
+克隆数据文件
+> git clone https://github.com/Kengxxiao/ArknightsGameData.git
+
 安装PyCharm后进入文件资源管理器，切换到工程目录，右键选择
 > Open Folder As PyCharm Project
 ![ospj](./description/oaspj.png)
