@@ -51,7 +51,7 @@ class Clicker(object):
     def dragRel(self, x1, y1, dx, dy, duration=None, r=None, f_back=6):
         x2 = x1 + dx
         y2 = y1 + dy
-        print(x1, x2, y1, y2)
+        # print(x1, x2, y1, y2)
         self.dragTo(x1, y1, x2, y2, duration=duration, r=r, f_back=f_back)
 
     def input_text(self, text):
