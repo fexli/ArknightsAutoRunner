@@ -4,7 +4,7 @@ from utils.logger import root_logger as logger
 from imgReco.mapReco import getCurrentEpisode
 import math
 import time
-from config.Statics import ACTIVITY_MAP, NORMAL_MAP, ArkMap_RECO, ArkMap_ACTIVITY
+from config.Statics import ACTIVITY_MAP, NORMAL_MAP, ArkMap_RECO, ArkMap_ACTIVITY, ArkMap_MainStage
 
 
 def error_map(targStage, targMap):
@@ -251,23 +251,54 @@ class ArkMap(object):
             if targMap == 'OD':
                 return self.activityMapAdapter((205, 317), 'OD-', (205, 397), 'OD-EX-', 2, 2, 1.5, targStage, targMap)
             if targMap == 'DM':
-                return self.activityMapAdapter((789, 523), 'DM-', (870, 640), 'DM-EX-', 1.3, 1.5, 1.5, targStage, targMap)
+                return self.activityMapAdapter((789, 523), 'DM-', (870, 640), 'DM-EX-', 1.3, 1.5, 1.5, targStage,
+                                               targMap)
 
             logger.error(f"当前地图'{targMap}'尚未适配进入模式，请在ArkMap中进行适配后再次运行")
             return False
         return True
 
+    def clickEpNearist(self, mapId: int):
+        targMap = mapId
+        targStage = None
+        currMap = None
+        currStage = None
+        for stage, include in ArkMap_MainStage.items():
+            if mapId in include:
+                targStage = int(stage[-1])
+            if self.__ark.gameTemp.dingwei(f"main\\epstage\\{stage}.png", self.__ark.getScreenShot(121, 208, 86, 47)):
+                currStage = int(stage[-1])
+                for inc in include:
+                    if self.__ark.gameTemp.dingwei(f"main\\epstage\\{inc}.png",
+                                                   self.__ark.getScreenShot(871, 383, 149, 68)):
+                        currMap = inc
+        logger.debug(f"[{targStage}-{targMap} {currStage}-{currMap}]")
+        if not (targMap and targStage and currMap and currStage):
+            logger.error(f"未找到地图！[{targStage}-{targMap} {currStage}-{currMap}]")
+            raise KeyError(f"未找到地图")
+        if currStage == targStage:
+            self.__ark.clicker.mouse_click(945 - 312 * min(3, max(currMap - targMap, 0)), 367, t=1.3)
+            return -1
+        dist = targStage - currStage
+        clk = (64, 133) if dist < 0 else (65, 517)
+        for rg in range(abs(dist)):
+            self.__ark.clicker.mouse_click(*clk, t=0.7)
+        logger.debug(f"{clk},{dist}")
+        return self.clickEpNearist(mapId)
+
     def fromMapMainToMap(self, mapName: str):
         if mapName[0:2] == 'EP':
+            self.__ark.clicker.mouse_click(277, 668, t=0.8)
             map_id = int(mapName[2:])
-            tab_id, pos = self.checkMapClose(map_id)
-            self.__ark.clicker.mouse_click(pos[0], pos[1], t=1.8)
+            tab_id = self.clickEpNearist(map_id)
+            # tab_id, pos = self.checkMapClose(map_id)
+            # self.__ark.clicker.mouse_click(pos[0], pos[1], t=1.8)
             self.changeMapEP(map_id, tab_id)
             return True
         if mapName in NORMAL_MAP:
-            self.__ark.clicker.mouse_click(239, 657, t=0.5)
+            self.__ark.clicker.mouse_click(815, 675, t=0.5)
             ret = self.__ark.gameTemp.dingwei(f"main\\map\\i_{mapName}.png",
-                                              self.__ark.getScreenShot(0, 348, 1280, 44), 0.94)
+                                              self.__ark.getScreenShot(0, 382, 1280, 451), 0.94)
             if not ret:
                 logger.error(f"未找到地图{mapName}")
                 return False

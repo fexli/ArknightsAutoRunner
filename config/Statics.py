@@ -27,6 +27,12 @@ ArkMap_RECO = ['map_atk', 'main', 'map_main', 'map_exterm', 'map_ep', 'map_mat',
                'map_DM']
 # 已经完成行动方法的地图（由于没复刻以及懒得做等原因不是很全）
 ArkMap_ACTIVITY = ['map_CB', 'map_MB', 'map_WR', 'map_OD', 'map_DM']
+
+# 主线关卡分类 主线视图(873,385,145,64) 阶段视图左侧名字
+ArkMap_MainStage = {
+    'epstage1': [0, 1, 2, 3],
+    'epstage2': [4, 5, 6, 7, 8],
+}
 # ArkMap->
 
 # <-ArkAutoRunner
